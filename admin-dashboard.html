@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard · AI College Notice Assistant</title>
+    <link rel="icon" type="image/svg+xml" href="assets/icons/logo.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="overlay" id="overlay"></div>
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+          <img src="assets/icons/logo.svg" alt="" width="40" height="40" />
+          <div>
+            <h1>AI College Notice Assistant</h1>
+            <small>Administration</small>
+          </div>
+        </div>
+        <ul class="nav-list">
+          <li>
+            <button class="active" data-nav="dashboard" type="button">
+              <i class="bi bi-grid"></i> Dashboard
+            </button>
+          </li>
+          <li>
+            <button data-nav="notices" type="button">
+              <i class="bi bi-megaphone"></i> Notices
+            </button>
+          </li>
+          <li>
+            <button data-nav="students" type="button">
+              <i class="bi bi-people"></i> Students
+            </button>
+          </li>
+          <li>
+            <button data-nav="analytics" type="button">
+              <i class="bi bi-graph-up"></i> Analytics
+            </button>
+          </li>
+          <li>
+            <button data-nav="settings" type="button">
+              <i class="bi bi-gear"></i> Settings
+            </button>
+          </li>
+        </ul>
+        <div class="sidebar-profile">
+          <p class="name" id="profile-name">Administrator</p>
+          <p class="email" id="profile-email">admin@college.com</p>
+          <button class="btn-logout" id="logout-btn" type="button">
+            <i class="bi bi-box-arrow-left"></i> Logout
+          </button>
+        </div>
+      </aside>
+
+      <div class="main">
+        <header class="topbar">
+          <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Open menu">
+            <i class="bi bi-list"></i>
+          </button>
+          <div>
+            <h2 id="topbar-title">AI College Notice Assistant</h2>
+            <p id="topbar-subtitle">Admin Dashboard</p>
+          </div>
+          <span class="badge-role">ADMIN</span>
+        </header>
+
+        <main class="content">
+          <section class="view active" id="view-dashboard">
+            <div class="welcome">
+              <h2>Admin Dashboard</h2>
+              <p id="college-banner">Manage and publish college notices for students.</p>
+            </div>
+
+            <div class="stats-grid">
+              <article class="stat-card">
+                <div class="label">Total Notices <i class="bi bi-file-earmark-text"></i></div>
+                <div class="value" id="stat-total">0</div>
+              </article>
+              <article class="stat-card">
+                <div class="label">Active Students <i class="bi bi-people"></i></div>
+                <div class="value" id="stat-students">0</div>
+              </article>
+              <article class="stat-card">
+                <div class="label">Pending Notices <i class="bi bi-hourglass-split"></i></div>
+                <div class="value" id="stat-pending">0</div>
+              </article>
+              <article class="stat-card">
+                <div class="label">Upcoming Events <i class="bi bi-calendar-event"></i></div>
+                <div class="value" id="stat-upcoming">0</div>
+              </article>
+            </div>
+
+            <section class="panel">
+              <h3>Quick Actions</h3>
+              <div class="actions">
+                <button class="btn-action primary" type="button" id="qa-create">
+                  <i class="bi bi-plus-circle"></i> Create Notice
+                </button>
+                <button class="btn-action" type="button" id="qa-manage">
+                  <i class="bi bi-folder2-open"></i> Manage Notices
+                </button>
+                <button class="btn-action" type="button" id="qa-students">
+                  <i class="bi bi-person-plus"></i> Manage Students
+                </button>
+              </div>
+            </section>
+
+            <section class="panel">
+              <h3>Recent Notices</h3>
+              <div id="recent-notices"></div>
+            </section>
+          </section>
+
+          <section class="view" id="view-notices">
+            <div class="panel">
+              <div class="panel-head">
+                <div>
+                  <h3>Notices</h3>
+                  <p class="hint">Create, upload, publish, and edit college notices. Text extraction and OCR come in later phases.</p>
+                </div>
+                <button class="btn-action primary" type="button" id="btn-new-notice">
+                  <i class="bi bi-plus-circle"></i> Create Notice
+                </button>
+              </div>
+              <div class="filter-row">
+                <input class="field" id="notice-search" type="search" placeholder="Search title or text" />
+                <select class="field" id="filter-status">
+                  <option value="">All statuses</option>
+                  <option value="published">Published</option>
+                  <option value="pending">Pending</option>
+                  <option value="draft">Draft</option>
+                </select>
+                <select class="field" id="filter-category">
+                  <option value="">All categories</option>
+                  <option value="general">General</option>
+                  <option value="exam">Exam</option>
+                  <option value="event">Event</option>
+                  <option value="academic">Academic</option>
+                  <option value="urgent">Urgent</option>
+                </select>
+                <button class="btn-action" type="button" id="btn-clear-filters">Clear</button>
+              </div>
+              <div class="table-wrap">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Notice</th>
+                      <th>Category</th>
+                      <th>Status</th>
+                      <th>Event</th>
+                      <th>Updated</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody id="notice-table-body"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <section class="view" id="view-students">
+            <div class="panel">
+              <div class="panel-head">
+                <div>
+                  <h3>Students</h3>
+                  <p class="hint">Demo student records for Phase 2. Profile matching is expanded in Phase 7.</p>
+                </div>
+              </div>
+              <form id="student-form" class="form-grid" style="margin-bottom: 18px">
+                <div>
+                  <label for="st-name">Name</label>
+                  <input class="field" id="st-name" required />
+                </div>
+                <div>
+                  <label for="st-email">Email</label>
+                  <input class="field" id="st-email" type="email" required />
+                </div>
+                <div>
+                  <label for="st-branch">Branch</label>
+                  <input class="field" id="st-branch" placeholder="e.g. Computer Engineering" />
+                </div>
+                <div>
+                  <label for="st-semester">Semester</label>
+                  <input class="field" id="st-semester" placeholder="e.g. 4" />
+                </div>
+                <div>
+                  <label for="st-division">Division</label>
+                  <input class="field" id="st-division" placeholder="e.g. A" />
+                </div>
+                <div class="check-row">
+                  <button class="btn-action primary" type="submit">
+                    <i class="bi bi-person-plus"></i> Add student
+                  </button>
+                </div>
+              </form>
+              <p id="student-form-error" class="alert-error" role="alert"></p>
+              <div class="table-wrap">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Branch</th>
+                      <th>Sem / Div</th>
+                      <th>Status</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody id="student-table-body"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <section class="view" id="view-analytics">
+            <div class="panel">
+              <h3>Analytics</h3>
+              <p class="hint">Simple counts from stored notices. Engagement tracking can be added after deployment.</p>
+              <div class="stats-grid" style="margin-top: 16px">
+                <article class="stat-card">
+                  <div class="label">Published</div>
+                  <div class="value" id="an-published">0</div>
+                </article>
+                <article class="stat-card">
+                  <div class="label">Important</div>
+                  <div class="value" id="an-important">0</div>
+                </article>
+                <article class="stat-card">
+                  <div class="label">Pending / Draft</div>
+                  <div class="value" id="an-pending">0</div>
+                </article>
+                <article class="stat-card">
+                  <div class="label">With attachments</div>
+                  <div class="value" id="an-files">0</div>
+                </article>
+              </div>
+              <h3>By category</h3>
+              <div class="bar-list" id="category-bars"></div>
+            </div>
+          </section>
+
+          <section class="view" id="view-settings">
+            <div class="panel">
+              <h3>Settings</h3>
+              <form id="settings-form" class="form-grid">
+                <div>
+                  <label for="set-college">College name</label>
+                  <input class="field" id="set-college" />
+                </div>
+                <div>
+                  <label for="set-year">Academic year</label>
+                  <input class="field" id="set-year" />
+                </div>
+                <div class="full">
+                  <button class="btn-action primary" type="submit">Save settings</button>
+                </div>
+              </form>
+              <p class="phase-note">
+                OCR, AI summaries, reminders, multilingual text, and MySQL are not enabled yet.
+                Notices are stored in this browser only for the Phase 2 demo.
+              </p>
+              <div class="actions" style="margin-top: 16px">
+                <button class="btn-action danger" type="button" id="btn-restore">
+                  Restore demo data
+                </button>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <div class="modal-backdrop" id="notice-modal" role="dialog" aria-modal="true" aria-labelledby="notice-modal-title">
+      <div class="modal">
+        <h3 id="notice-modal-title">Create Notice</h3>
+        <p class="hint">Upload a PDF or image if needed. Extraction and OCR are reserved for Phases 3–4.</p>
+        <form id="notice-form">
+          <input type="hidden" id="notice-id" />
+          <div class="form-grid">
+            <div class="full">
+              <label for="n-title">Title</label>
+              <input class="field" id="n-title" required maxlength="140" />
+            </div>
+            <div>
+              <label for="n-category">Category</label>
+              <select class="field" id="n-category">
+                <option value="general">General</option>
+                <option value="exam">Exam</option>
+                <option value="event">Event</option>
+                <option value="academic">Academic</option>
+                <option value="urgent">Urgent</option>
+              </select>
+            </div>
+            <div>
+              <label for="n-status">Status</label>
+              <select class="field" id="n-status">
+                <option value="published">Published (visible to students)</option>
+                <option value="pending">Pending</option>
+                <option value="draft">Draft</option>
+              </select>
+            </div>
+            <div>
+              <label for="n-event">Event / deadline date</label>
+              <input class="field" id="n-event" type="date" />
+            </div>
+            <div class="check-row">
+              <label><input type="checkbox" id="n-important" /> Mark as important</label>
+            </div>
+            <div class="check-row">
+              <label><input type="checkbox" id="n-all" checked /> Visible to all students</label>
+            </div>
+            <div class="full audience-fields hidden" id="audience-fields">
+              <div class="form-grid">
+                <div>
+                  <label for="n-branch">Branch</label>
+                  <input class="field" id="n-branch" placeholder="Leave blank to skip" />
+                </div>
+                <div>
+                  <label for="n-semester">Semester</label>
+                  <input class="field" id="n-semester" />
+                </div>
+                <div>
+                  <label for="n-division">Division</label>
+                  <input class="field" id="n-division" />
+                </div>
+              </div>
+            </div>
+            <div class="full">
+              <label for="n-body">Notice text</label>
+              <textarea class="field" id="n-body" required></textarea>
+            </div>
+            <div class="full">
+              <label for="n-file">Attachment (PDF or image, max 350 KB)</label>
+              <input class="field" id="n-file" type="file" accept=".pdf,image/*" />
+              <p class="muted" id="n-file-label"></p>
+            </div>
+          </div>
+          <p id="notice-form-error" class="alert-error" role="alert"></p>
+          <div class="modal-actions">
+            <button class="btn-action" type="button" id="btn-cancel-notice">Cancel</button>
+            <button class="btn-action primary" type="submit">Save notice</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div id="admin-toast" class="toast floating-toast" role="status"></div>
+    <script src="js/auth.js"></script>
+    <script src="js/store.js"></script>
+    <script src="js/admin.js"></script>
+  </body>
+</html>

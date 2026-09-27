@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="AI College Notice Assistant">
+  <defs>
+    <linearGradient id="g" x1="8" y1="4" x2="56" y2="60" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1d4ed8"/>
+      <stop offset="1" stop-color="#0f2c59"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="url(#g)"/>
+  <path fill="#fff" d="M32 12l16 8v8c0 11.2-7.2 21.4-16 24.4C23.2 49.4 16 39.2 16 28v-8l16-8zm0 6.4L21.6 23.6V28c0 8.5 5.3 16.3 10.4 18.8 5.1-2.5 10.4-10.3 10.4-18.8v-4.4L32 18.4z"/>
+  <rect x="26" y="26" width="12" height="2.4" rx="1.2" fill="#93c5fd"/>
+  <rect x="26" y="31" width="12" height="2.4" rx="1.2" fill="#93c5fd"/>
+  <rect x="26" y="36" width="8" height="2.4" rx="1.2" fill="#93c5fd"/>
+</svg>
